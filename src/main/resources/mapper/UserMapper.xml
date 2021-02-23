@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybestcoding.hmt.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.mybestcoding.hmt.model.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="prefix" jdbcType="VARCHAR" property="prefix"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="salt" jdbcType="VARCHAR" property="salt"/>
+        <result column="user_key" jdbcType="VARCHAR" property="userKey"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+        <!--        <collection property="roles" javaType="ArrayList" column="id" ofType="com.mybestcoding.hmt.model.Role"-->
+        <!--                    select="selectRoleByUserId">-->
+        <!--        </collection>-->
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , username, password,prefix, tel, email, salt, user_key, created_time, last_login_time,
+    updated_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hmt_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectRoleByUserId" parameterType="java.lang.Integer" resultType="com.mybestcoding.hmt.model.Role">
+        select r.id           AS id,
+               r.role         AS role,
+               r.created_time AS createdTime
+        from hmt_user u,
+             hmt_role r,
+             hmt_user_role ur
+        where r.id = ur.urole_id
+          AND ur.user_id = u.id
+          AND u.id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hmt_user
+        where username=#{username, jdbcType=VARCHAR}
+    </select>
+    <select id="selectByEmail" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hmt_user
+        where email = #{email, jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from hmt_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.mybestcoding.hmt.model.User" useGeneratedKeys="true" keyProperty="id">
+        insert into hmt_user (id, username, password, prefix,
+                              tel, email, salt, user_key,
+                              created_time, last_login_time, updated_time)
+        values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR},
+                #{userKey,jdbcType=VARCHAR},
+                #{createdTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP},
+                #{updatedTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.User">
+        insert into hmt_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="prefix != null">
+                prefix,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+            <if test="userKey != null">
+                user_key,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="updatedTime != null">
+                updated_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="prefix != null">
+                #{prefix, jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="userKey != null">
+                #{userKey,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mybestcoding.hmt.model.User">
+        update hmt_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="prefix != null">
+                prefix = #{prefix,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="userKey != null">
+                user_key = #{userKey,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mybestcoding.hmt.model.User">
+        update hmt_user
+        set username        = #{username,jdbcType=VARCHAR},
+            password        = #{password,jdbcType=VARCHAR},
+            prefix          = #{prefix,jdbcType=VARCHAR},
+            tel             = #{tel,jdbcType=VARCHAR},
+            email           = #{email,jdbcType=VARCHAR},
+            salt            = #{salt,jdbcType=VARCHAR},
+            user_key        = #{userKey,jdbcType=VARCHAR},
+            created_time    = #{createdTime,jdbcType=TIMESTAMP},
+            last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            updated_time    = #{updatedTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
