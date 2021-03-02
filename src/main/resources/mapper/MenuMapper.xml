@@ -5,12 +5,13 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="level" jdbcType="CHAR" property="level" />
     <result column="name" jdbcType="CHAR" property="name" />
+    <result column="parant" jdbcType="CHAR" property="parant" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, level, name, url, created_time, updated_time
+    id, level, name, parant, url, created_time, updated_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,10 +24,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.mybestcoding.hmt.model.Menu">
-    insert into hmt_menu (id, level, name, url, 
-      created_time, updated_time)
-    values (#{id,jdbcType=INTEGER}, #{level,jdbcType=CHAR}, #{name,jdbcType=CHAR}, #{url,jdbcType=VARCHAR}, 
-      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+    insert into hmt_menu (id, level, name, parant, 
+      url, created_time, updated_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{level,jdbcType=CHAR}, #{name,jdbcType=CHAR}, #{parant,jdbcType=CHAR}, 
+      #{url,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.Menu">
     insert into hmt_menu
@@ -39,6 +42,9 @@
       </if>
       <if test="name != null">
         name,
+      </if>
+      <if test="parant != null">
+        parant,
       </if>
       <if test="url != null">
         url,
@@ -60,6 +66,9 @@
       <if test="name != null">
         #{name,jdbcType=CHAR},
       </if>
+      <if test="parant != null">
+        #{parant,jdbcType=CHAR},
+      </if>
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
@@ -80,6 +89,9 @@
       <if test="name != null">
         name = #{name,jdbcType=CHAR},
       </if>
+      <if test="parant != null">
+        parant = #{parant,jdbcType=CHAR},
+      </if>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
@@ -96,6 +108,7 @@
     update hmt_menu
     set level = #{level,jdbcType=CHAR},
       name = #{name,jdbcType=CHAR},
+      parant = #{parant,jdbcType=CHAR},
       url = #{url,jdbcType=VARCHAR},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}

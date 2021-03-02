@@ -52,11 +52,21 @@
         from hmt_user
         where email = #{email, jdbcType=VARCHAR}
     </select>
+    <select id="selectAll" resultType="com.mybestcoding.hmt.model.User">
+        select
+        <include refid="Base_Column_List"/>
+        from hmt_user
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from hmt_user
         where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByUserName" parameterType="java.lang.String">
+        delete
+        from hmt_user
+        where username = #{name,jdbcType=VARCHAR}
     </delete>
     <insert id="insert" parameterType="com.mybestcoding.hmt.model.User" useGeneratedKeys="true" keyProperty="id">
         insert into hmt_user (id, username, password, prefix,
