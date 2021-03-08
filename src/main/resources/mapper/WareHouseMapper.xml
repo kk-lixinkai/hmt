@@ -1,93 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybestcoding.hmt.mapper.WareHouseMapper">
-  <resultMap id="BaseResultMap" type="com.mybestcoding.hmt.model.WareHouse">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="warehouse_type" jdbcType="VARCHAR" property="warehouseType" />
-    <result column="warehouse_key" jdbcType="VARCHAR" property="warehouseKey" />
-    <result column="location" jdbcType="VARCHAR" property="location" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, warehouse_type, warehouse_key, location, created_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from hmt_warehouse
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from hmt_warehouse
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.mybestcoding.hmt.model.WareHouse">
-    insert into hmt_warehouse (id, warehouse_type, warehouse_key, 
-      location, created_time)
-    values (#{id,jdbcType=INTEGER}, #{warehouseType,jdbcType=VARCHAR}, #{warehouseKey,jdbcType=VARCHAR}, 
-      #{location,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.WareHouse">
-    insert into hmt_warehouse
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="warehouseType != null">
-        warehouse_type,
-      </if>
-      <if test="warehouseKey != null">
-        warehouse_key,
-      </if>
-      <if test="location != null">
-        location,
-      </if>
-      <if test="createdTime != null">
-        created_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="warehouseType != null">
-        #{warehouseType,jdbcType=VARCHAR},
-      </if>
-      <if test="warehouseKey != null">
-        #{warehouseKey,jdbcType=VARCHAR},
-      </if>
-      <if test="location != null">
-        #{location,jdbcType=VARCHAR},
-      </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mybestcoding.hmt.model.WareHouse">
-    update hmt_warehouse
-    <set>
-      <if test="warehouseType != null">
-        warehouse_type = #{warehouseType,jdbcType=VARCHAR},
-      </if>
-      <if test="warehouseKey != null">
-        warehouse_key = #{warehouseKey,jdbcType=VARCHAR},
-      </if>
-      <if test="location != null">
-        location = #{location,jdbcType=VARCHAR},
-      </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mybestcoding.hmt.model.WareHouse">
-    update hmt_warehouse
-    set warehouse_type = #{warehouseType,jdbcType=VARCHAR},
-      warehouse_key = #{warehouseKey,jdbcType=VARCHAR},
-      location = #{location,jdbcType=VARCHAR},
-      created_time = #{createdTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.mybestcoding.hmt.model.WareHouse">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="longitude" jdbcType="VARCHAR" property="longitude"/>
+        <result column="latitude" jdbcType="VARCHAR" property="latitude"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+        <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, longitude, latitude, created_time, updated_time, delete_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hmt_warehouse
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from hmt_warehouse
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.mybestcoding.hmt.model.WareHouse" useGeneratedKeys="true" keyProperty="id">
+        insert into hmt_warehouse (id, longitude, latitude,
+                                   created_time, updated_time, delete_time)
+        values (#{id,jdbcType=INTEGER}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR},
+                #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.WareHouse" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into hmt_warehouse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="updatedTime != null">
+                updated_time,
+            </if>
+            <if test="deleteTime != null">
+                delete_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteTime != null">
+                #{deleteTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mybestcoding.hmt.model.WareHouse">
+        update hmt_warehouse
+        <set>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteTime != null">
+                delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mybestcoding.hmt.model.WareHouse">
+        update hmt_warehouse
+        set longitude    = #{longitude,jdbcType=VARCHAR},
+            latitude     = #{latitude,jdbcType=VARCHAR},
+            created_time = #{createdTime,jdbcType=TIMESTAMP},
+            updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            delete_time  = #{deleteTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

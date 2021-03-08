@@ -1,5 +1,6 @@
 package com.mybestcoding.hmt.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,31 +10,36 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class Menu extends BaseModel {
-    private static final long serialVersionUID = -387615755229881581L;
+public class Email extends BaseModel {
+    private static final long serialVersionUID = 7299245851667978960L;
 
     /**
-     * 菜单id
+     * 邮件id
      */
     private Integer id;
 
     /**
-     * 菜单项
+     * 发件人
      */
-    private String item;
+    private String from;
 
     /**
-     * 等级：一级菜单、二级菜单、以此类推
+     * 收件人
      */
-    private Integer level;
+    private String to;
 
     /**
-     * 上级菜单
+     * 主题
      */
-    private String pre;
+    private String subject;
 
     /**
-     * 跳转连接
+     * 内容
+     */
+    private String content;
+
+    /**
+     * 附件地址
      */
     private String url;
 

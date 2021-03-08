@@ -1,61 +1,65 @@
 package com.mybestcoding.hmt;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
-import com.mybestcoding.hmt.mapper.RoleMapper;
-import com.mybestcoding.hmt.mapper.UserMapper;
-import com.mybestcoding.hmt.model.User;
+import com.mybestcoding.hmt.constant.TsData;
+import com.redislabs.redistimeseries.Aggregation;
+import com.redislabs.redistimeseries.RedisTimeSeries;
+import com.redislabs.redistimeseries.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 @Slf4j
 @SpringBootTest
 class HmtApplicationTests {
 
-    @Autowired
-    RoleMapper roleMapper;
 
     @Autowired
-    UserMapper userMapper;
+    JedisConnectionFactory jedisConnectionFactory;
+
+    @Autowired
+    RedisTimeSeries rts;
+
 
     @Test
     void contextLoads() {
     }
 
+
     @Test
-    public void mybatisTest() {
-        log.info(roleMapper.selectByPrimaryKey(1).toString());
+    public void printPool() {
+        log.info(jedisConnectionFactory.getPoolConfig().toString());
     }
 
     @Test
-    public void userTest() {
-        String s = UUID.randomUUID().toString();
-
-        User user = new User();
-        user.setUsername("zhangsan");
-        user.setPassword("zhangsan");
-        user.setTel("13415626441");
-        user.setEmail("kk-lixinkai@qq.com");
-        user.setSalt(s.substring(0, s.indexOf("-")));
-        user.setUserKey(s.substring(s.lastIndexOf("-") + 1));
-        user.setCreatedTime(new Date());
-        user.setLastLoginTime(new Date());
-        user.setUpdatedTime(new Date());
-
-
-        userMapper.insert(user);
-
-        log.info(user.toString());
+    public void rtsTest() {
+        Map<String, String> labels = new HashMap<>();
+        labels.put("sensor_id", "2");
+        labels.put("area_id", "32");
+        rts.create("temperature:3:11", 60 * 10 * 10, labels);
+        rts.add("temperature:3:11", 1548149181, 30.0);
+        rts.add("temperature:3:11", 1548149191, 42.0);
     }
 
     @Test
-    public void selectOne() {
-        User user = userMapper.selectByPrimaryKey(2);
-        log.info(user.toString());
+    public void rtsRange() {
+        Value[] values = rts.range("temperature:3:11", 1614746106, 1614747096, Aggregation.AVG, 10);
+//        for (Value value : values) {
+//            log.info("时间戳:{}, 平均值:{}", value.getTime(), value.getValue());
+//        }
+
+        readTsValues(values).forEach(s -> log.info("时间戳:{}, 平均值:{}", s.getTimestamp(), s.getValue()));
+    }
+
+    private List<TsData> readTsValues(Value[] values) {
+        return Arrays.stream(values)
+                .map(TsData::mapToTsData)
+                .collect(Collectors.toList());
     }
 
 }

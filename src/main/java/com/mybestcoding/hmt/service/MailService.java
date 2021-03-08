@@ -9,4 +9,6 @@ import javax.mail.MessagingException;
  */
 public interface MailService {
     boolean sendCaptcha(ToEmail toEmail) throws MessagingException;
+
+    boolean saveEmail(ToEmail toEmail);
 }

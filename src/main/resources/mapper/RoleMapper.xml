@@ -5,9 +5,11 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="role" jdbcType="VARCHAR" property="role"/>
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+        <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, role, created_time
+        id, role, created_time, updated_time, delete_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -16,16 +18,18 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from hmt_role
+        delete
+        from hmt_role
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.mybestcoding.hmt.model.Role">
-        insert into hmt_role (id, role, created_time
-        )
-        values (#{id,jdbcType=INTEGER}, #{role,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}
-        )
+    <insert id="insert" parameterType="com.mybestcoding.hmt.model.Role" useGeneratedKeys="true" keyProperty="id">
+        insert into hmt_role (id, role, created_time,
+                              updated_time, delete_time)
+        values (#{id,jdbcType=INTEGER}, #{role,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP},
+                #{updatedTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.Role">
+    <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.Role" useGeneratedKeys="true"
+            keyProperty="id">
         insert into hmt_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -36,6 +40,12 @@
             </if>
             <if test="createdTime != null">
                 created_time,
+            </if>
+            <if test="updatedTime != null">
+                updated_time,
+            </if>
+            <if test="deleteTime != null">
+                delete_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -48,6 +58,12 @@
             <if test="createdTime != null">
                 #{createdTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteTime != null">
+                #{deleteTime,jdbcType=TIMESTAMP},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.mybestcoding.hmt.model.Role">
@@ -59,13 +75,21 @@
             <if test="createdTime != null">
                 created_time = #{createdTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteTime != null">
+                delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.mybestcoding.hmt.model.Role">
         update hmt_role
-        set role = #{role,jdbcType=VARCHAR},
-        created_time = #{createdTime,jdbcType=TIMESTAMP}
+        set role         = #{role,jdbcType=VARCHAR},
+            created_time = #{createdTime,jdbcType=TIMESTAMP},
+            updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            delete_time  = #{deleteTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

@@ -1,5 +1,7 @@
 package com.mybestcoding.hmt.service.impl;
 
+import com.mybestcoding.hmt.mapper.EmailMapper;
+import com.mybestcoding.hmt.model.Email;
 import com.mybestcoding.hmt.model.ToEmail;
 import com.mybestcoding.hmt.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private EmailMapper emailMapper;
+
     @Value("${spring.mail.username}")
     private String from;
 
@@ -47,6 +52,27 @@ public class MailServiceImpl implements MailService {
         } catch (MailException | MessagingException e) {
             return false;
         }
+    }
+
+    /**
+     * 保存邮件
+     *
+     * @param toEmail 接收到的邮件
+     * @return 保存结果，true 成功；false：失败
+     */
+    @Override
+    public boolean saveEmail(ToEmail toEmail) {
+        int result = 0;
+        if (toEmail.getReceivers() != null && toEmail.getReceivers().length > 0 && toEmail.getSubject() != null &&
+                toEmail.getContent() != null) {
+
+            Email email = new Email()
+                    .setTo(toEmail.getReceivers().toString())
+                    .setSubject(toEmail.getSubject())
+                    .setContent(toEmail.getContent());
+            result = emailMapper.insertSelective(email);
+        }
+        return result > 0;
     }
 
     /**

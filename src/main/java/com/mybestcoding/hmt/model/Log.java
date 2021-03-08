@@ -1,33 +1,31 @@
 package com.mybestcoding.hmt.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class WareHouse extends BaseModel {
-    private static final long serialVersionUID = -9033247340698606590L;
+public class Log extends BaseModel {
+    private static final long serialVersionUID = -4398366672474765528L;
 
     /**
-     * 仓库id
+     * 日志id
      */
     private Integer id;
 
     /**
-     * 经度
+     * 用户
      */
-    private String longitude;
+    private String user;
 
     /**
-     * 纬度
+     * 动作
      */
-    private String latitude;
+    private String action;
 
 }
