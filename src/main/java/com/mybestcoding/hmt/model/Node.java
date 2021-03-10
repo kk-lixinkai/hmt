@@ -5,15 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class Node extends BaseModel {
-
-    private static final long serialVersionUID = 6990724034092315537L;
-
+public class Node {
     /**
      * 节点id
      */
@@ -28,5 +26,21 @@ public class Node extends BaseModel {
      * 节点状态
      */
     private String status;
+
+    /**
+     * 仓库 id
+     */
+    private Integer wid;
+
+    /**
+     * 终端 id
+     */
+    private Integer tid;
+
+    private Date createdTime;
+
+    private Date updatedTime;
+
+    private Date deleteTime;
 
 }

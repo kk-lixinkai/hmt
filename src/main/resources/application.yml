@@ -11,7 +11,7 @@ spring:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
   redis:
-    host: 127.0.0.1
+    host: 47.119.135.236
     port: 6379
     password: lixinkai
     timeout: 10000
@@ -20,6 +20,11 @@ spring:
         max-wait: 1000
         max-active: 8
         max-idle: 8
+
+  cache:
+    redis:
+      time-to-live: 10m
+    cache-names: user, role
 
   mail:
     ## 编码

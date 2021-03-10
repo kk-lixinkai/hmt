@@ -29,11 +29,6 @@ public class RegisterDto {
     @ApiModelProperty("密码")
     private String password;
     /**
-     * 电话号码前缀
-     */
-    @ApiModelProperty("电话号码前缀")
-    private String prefix;
-    /**
      * 电话号码
      */
     @ApiModelProperty("电话号码")
@@ -43,4 +38,10 @@ public class RegisterDto {
      */
     @ApiModelProperty("电子邮件")
     private String email;
+
+    /**
+     * 权限
+     */
+    @ApiModelProperty("权限")
+    private String role;
 }

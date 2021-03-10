@@ -63,6 +63,19 @@ public class RedisTimeSeriesUtil {
 
 
     /**
+     * 获取数据，默认是最新的数据
+     *
+     * @param key 键
+     * @return 值
+     */
+    public TsData tsGet(String key) {
+        Value value = redisTimeSeries.get(key);
+        TsData tsData = TsData.mapToTsData(value);
+        return tsData;
+    }
+
+
+    /**
      * 添加TS数据
      *
      * @param key       键

@@ -6,13 +6,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class TerminalDevice extends BaseModel {
+public class TerminalDevice {
     private static final long serialVersionUID = -3953280884598284340L;
 
     /**
@@ -24,5 +25,20 @@ public class TerminalDevice extends BaseModel {
      * 工作状态
      */
     private String status;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新时间(可空)
+     */
+    private Date updatedTime;
+
+    /**
+     * 删除时间(可空)
+     */
+    private Date deleteTime;
 
 }

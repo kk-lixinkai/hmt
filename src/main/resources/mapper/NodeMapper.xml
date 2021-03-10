@@ -5,12 +5,14 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="wid" jdbcType="INTEGER" property="wid" />
+    <result column="tid" jdbcType="INTEGER" property="tid" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
     <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, type, status, created_time, updated_time, delete_time
+    id, type, status, wid, tid, created_time, updated_time, delete_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -22,15 +24,15 @@
     delete from hmt_node
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mybestcoding.hmt.model.Node" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.mybestcoding.hmt.model.Node">
     insert into hmt_node (id, type, status, 
-      created_time, updated_time, delete_time
-      )
+      wid, tid, created_time, 
+      updated_time, delete_time)
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
-      )
+      #{wid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.Node" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.Node">
     insert into hmt_node
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -41,6 +43,12 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="wid != null">
+        wid,
+      </if>
+      <if test="tid != null">
+        tid,
       </if>
       <if test="createdTime != null">
         created_time,
@@ -62,6 +70,12 @@
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
       </if>
+      <if test="wid != null">
+        #{wid,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -82,6 +96,12 @@
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="wid != null">
+        wid = #{wid,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
       <if test="createdTime != null">
         created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -98,6 +118,8 @@
     update hmt_node
     set type = #{type,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
+      wid = #{wid,jdbcType=INTEGER},
+      tid = #{tid,jdbcType=INTEGER},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       delete_time = #{deleteTime,jdbcType=TIMESTAMP}

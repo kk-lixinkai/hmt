@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author: lixinkai
@@ -39,4 +40,5 @@ public class ToEmail implements Serializable {
      */
     @ApiModelProperty(value = "邮件内容")
     private String content;
+
 }

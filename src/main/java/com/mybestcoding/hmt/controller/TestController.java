@@ -1,6 +1,7 @@
 package com.mybestcoding.hmt.controller;
 
 import com.mybestcoding.hmt.broker.MqttBroker;
+import com.mybestcoding.hmt.broker.MqttGateway;
 import com.mybestcoding.hmt.constant.ResponseBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Autowired
-    MqttBroker.MyGateway gateway;
+    MqttGateway gateway;
 
 
     @ApiOperation(value = "发布主题", notes = "测试发布主题")

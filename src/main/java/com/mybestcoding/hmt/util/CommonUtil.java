@@ -3,6 +3,8 @@ package com.mybestcoding.hmt.util;
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 /**
@@ -46,5 +48,19 @@ public class CommonUtil {
     public static String getKey() {
         String s = UUID.randomUUID().toString();
         return s.substring(s.lastIndexOf("-") + 1);
+    }
+
+
+    /**
+     * 将日期转换为 时间戳
+     *
+     * @param date 时间
+     * @return 时间戳
+     */
+    public static long DateToTimestamp(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long timestamp = sdf.parse(date, new ParsePosition(0)).getTime() / 1000;
+        return timestamp;
+
     }
 }

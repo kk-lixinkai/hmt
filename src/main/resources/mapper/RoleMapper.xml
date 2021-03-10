@@ -17,6 +17,23 @@
         from hmt_role
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="selectRoleByUserId" resultType="java.lang.String">
+        SELECT hmt_role.role
+        FROM hmt_role,
+             hmt_user_role
+        WHERE hmt_role.id = hmt_user_role.rid
+          AND hmt_user_role.uid = #{uid, jdbcType=INTEGER}
+    </select>
+    <select id="selectByRoleName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hmt_role
+        where role = #{roleName, jdbcType=VARCHAR}
+    </select>
+    <select id="selectAllRoles" resultType="java.lang.String">
+        select role
+        from hmt_role
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from hmt_role
@@ -63,6 +80,31 @@
             </if>
             <if test="deleteTime != null">
                 #{deleteTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <insert id="bindRole" useGeneratedKeys="true" keyProperty="id">
+        insert into hmt_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                id,
+            </if>
+            <if test="userId!=null">
+                uid,
+            </if>
+            <if test="roleId!=null">
+                rid
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id, jdbcType=INTEGER}
+            </if>
+            <if test="userId!=null">
+                #{userId, jdbcType=INTEGER}
+            </if>
+            <if test="roleId!=null">
+                #{roleId, jdbcType=INTEGER}
             </if>
         </trim>
     </insert>

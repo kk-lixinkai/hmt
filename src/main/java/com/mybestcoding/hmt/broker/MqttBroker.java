@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -59,10 +60,16 @@ public class MqttBroker {
         return adapter;
     }
 
+
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public MessageHandler handler() {
         return new MessageHandler() {
+            /**
+             * 接收到的消息
+             * @param message
+             * @throws MessagingException
+             */
             @Override
             public void handleMessage(Message<?> message) throws MessagingException {
                 log.info(message.getPayload().toString());
@@ -79,8 +86,4 @@ public class MqttBroker {
         return messageHandler;
     }
 
-    @MessagingGateway(defaultRequestChannel = "mqttInputChannel")
-    public interface MyGateway {
-        void sendToMqtt(String data);
-    }
 }
