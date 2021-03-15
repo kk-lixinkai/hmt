@@ -17,14 +17,23 @@ spring:
     timeout: 10000
     jedis:
       pool:
-        max-wait: 1000
-        max-active: 8
+        max-wait: 100
+        max-active: 32
         max-idle: 8
-
+        min-idle: 4
+    database: 0
   cache:
     redis:
       time-to-live: 10m
     cache-names: user, role
+
+  mqtt:
+    username: admin
+    password: lixinkai
+    url: tcp://47.119.135.236:1883
+    clientId: mqttClient
+    topic: warehouse/#
+    completionTimeout: 2000
 
   mail:
     ## 编码

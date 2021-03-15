@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author: lixinkai
- * @description: Ts 过滤后的数据
+ * @description: Ts 过滤后的数据 Redis 服务器 -----> 客户端
  * @date: 2021/3/4 14:47
  * @GitHub: https://github.com/kk-lixinkai
  * @Gitee: https://gitee.com/bestbug

@@ -5,6 +5,8 @@ import com.mybestcoding.hmt.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -35,5 +37,18 @@ public class SimpleTest {
         String salt = "222d5a2e";
         String password = CommonUtil.encryption("lixinkai", salt);
         log.info(password);
+    }
+
+
+    @Test
+    public void ss() {
+//        LocalDate now = LocalDate.now();
+        Date date = new Date();
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10000; i++) {
+            System.out.println(date.getTime());
+//            System.out.println(now);
+        }
+        System.out.println(System.currentTimeMillis() - start);
     }
 }

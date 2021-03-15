@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @author: lixinkai
- * @description: Ts 数据信息
+ * @description: Ts 数据信息  Redis 服务器 ------> 客户端
  * @date: 2021/3/3 11:55
  * @GitHub: https://github.com/kk-lixinkai
  * @Gitee: https://gitee.com/bestbug

@@ -1,6 +1,8 @@
 package com.mybestcoding.hmt;
 
+import com.mybestcoding.hmt.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +18,7 @@ public class HmtApplication implements CommandLineRunner {
 
     @Value("${server.port}")
     String port;
+
 
     public static void main(String[] args) {
         SpringApplication.run(HmtApplication.class, args);
