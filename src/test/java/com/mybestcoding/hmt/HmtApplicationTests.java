@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+import com.mybestcoding.hmt.constant.NodeStatus;
 import com.mybestcoding.hmt.constant.NodeType;
-import com.mybestcoding.hmt.constant.Status;
 import com.mybestcoding.hmt.constant.TsData;
 import com.mybestcoding.hmt.mapper.*;
 import com.mybestcoding.hmt.model.*;
@@ -88,19 +88,19 @@ class HmtApplicationTests {
         WareHouse wareHouse = new WareHouse().setLongitude(longitude).setLatitude(latitude).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
         wareHouseMapper.insertSelective(wareHouse);
         log.info("初始化仓库的信息:{}", wareHouse);
-        TerminalDevice terminalDevice = new TerminalDevice().setStatus(Status.OK.getStatus()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
+        TerminalDevice terminalDevice = new TerminalDevice().setStatus(NodeStatus.OK.getStatus()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
         terminalDeviceMapper.insertSelective(terminalDevice);
         log.info("初始化的终端信息:{}", terminalDevice);
-        Node temperature = new Node().setStatus(Status.OK.getStatus()).setType(NodeType.TEMPERATURE.getType()).setWid(wareHouse.getId()).setTid(terminalDevice.getId()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
+        Node temperature = new Node().setStatus(NodeStatus.OK.getStatus()).setType(NodeType.TEMPERATURE.getType()).setWid(wareHouse.getId()).setTid(terminalDevice.getId()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
         nodeMapper.insertSelective(temperature);
         log.info("初始化的温度节点: {}", temperature);
-        Node humidity = new Node().setStatus(Status.OK.getStatus()).setType(NodeType.HUMIDITY.getType()).setWid(wareHouse.getId()).setTid(terminalDevice.getId()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
+        Node humidity = new Node().setStatus(NodeStatus.OK.getStatus()).setType(NodeType.HUMIDITY.getType()).setWid(wareHouse.getId()).setTid(terminalDevice.getId()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
         nodeMapper.insertSelective(humidity);
         log.info("初始化的湿度节点: {}", humidity);
-        Node lightintensity = new Node().setStatus(Status.OK.getStatus()).setType(NodeType.LIGHTINTENSITY.getType()).setWid(wareHouse.getId()).setTid(terminalDevice.getId()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
+        Node lightintensity = new Node().setStatus(NodeStatus.OK.getStatus()).setType(NodeType.LIGHTINTENSITY.getType()).setWid(wareHouse.getId()).setTid(terminalDevice.getId()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
         nodeMapper.insertSelective(lightintensity);
         log.info("初始化的光照强度: {}", lightintensity);
-        Node flamealarm = new Node().setStatus(Status.OK.getStatus()).setType(NodeType.FLAMEALARM.getType()).setWid(wareHouse.getId()).setTid(terminalDevice.getId()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
+        Node flamealarm = new Node().setStatus(NodeStatus.OK.getStatus()).setType(NodeType.FLAMEALARM.getType()).setWid(wareHouse.getId()).setTid(terminalDevice.getId()).setCreatedTime(new Date()).setUpdatedTime(null).setDeleteTime(null);
         nodeMapper.insertSelective(flamealarm);
         log.info("初始化的火焰报警节点:{}", flamealarm);
 

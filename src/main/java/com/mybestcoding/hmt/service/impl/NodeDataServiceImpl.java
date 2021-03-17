@@ -2,6 +2,7 @@ package com.mybestcoding.hmt.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mybestcoding.hmt.constant.NodeStatus;
 import com.mybestcoding.hmt.constant.TsData;
 import com.mybestcoding.hmt.constant.TsNodeDataPackage;
 import com.mybestcoding.hmt.service.NodeDataService;
@@ -46,6 +47,9 @@ public class NodeDataServiceImpl implements NodeDataService {
         }
         // 保存数据
         rtsu.tsAdd(tsNodeDataPackage.getKey(), tsNodeDataPackage.getTimestamp(), tsNodeDataPackage.getValue());
+        // 设置节点状态
+        String nodeStatueKey = tsNodeDataPackage.getKey() + "s";
+        setNodeStatus(nodeStatueKey, NodeStatus.OK.getStatus());
     }
 
     @Override
@@ -56,12 +60,12 @@ public class NodeDataServiceImpl implements NodeDataService {
 
     @Override
     public List<TsData> nodeDataAggCal(String key, long startTime, long endTime, Aggregation cal, long bucketTime) {
-        return null;
+        return rtsu.tsRange(key, startTime, endTime, cal, bucketTime);
     }
 
     @Override
     public TsData newlyNodeData(String key) {
-        return null;
+        return rtsu.tsGet(key);
     }
 
     @Override
@@ -101,14 +105,17 @@ public class NodeDataServiceImpl implements NodeDataService {
 
     /**
      * 设置节点状态
+     * <p>
+     * 如果某个键过期，则表明该键在规定的时间内没有上传数据，视为故障
      *
      * @param nodeId
      * @param nodeStatus
      */
     private void setNodeStatus(String nodeId, String nodeStatus) {
-        redisUtil.set(nodeId, nodeStatus);
-        if (redisUtil.hasKey(nodeId)){
+        if (redisUtil.hasKey(nodeId)) {
             redisUtil.expire(nodeId, 30);
+            return;
         }
+        redisUtil.set(nodeId, nodeStatus);
     }
 }

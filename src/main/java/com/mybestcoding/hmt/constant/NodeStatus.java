@@ -1,12 +1,12 @@
 package com.mybestcoding.hmt.constant;
 
-public enum Status {
+public enum NodeStatus {
     OK("ok"),
     ERROR("error");
 
     private String status;
 
-    Status(String status) {
+    NodeStatus(String status) {
         this.status = status;
     }
 
