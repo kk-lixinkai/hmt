@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybestcoding.hmt.mapper.ExecLogMapper">
+    <resultMap id="BaseResultMap" type="com.mybestcoding.hmt.model.ExecLog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="method" jdbcType="VARCHAR" property="method"/>
+        <result column="uri" jdbcType="VARCHAR" property="uri"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="version" jdbcType="VARCHAR" property="version"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.mybestcoding.hmt.model.ExecLogWithBLOBs">
+        <result column="requ_param" jdbcType="LONGVARCHAR" property="requParam"/>
+        <result column="message" jdbcType="LONGVARCHAR" property="message"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, user_id, user_name, method, uri, ip, version, create_time
+    </sql>
+    <sql id="Blob_Column_List">
+        requ_param, message
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from hmt_exec_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from hmt_exec_log
+        order by create_time desc
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from hmt_exec_log
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.mybestcoding.hmt.model.ExecLogWithBLOBs">
+        insert into hmt_exec_log (id, name, user_id,
+                                  user_name, method, uri,
+                                  ip, version, create_time,
+                                  requ_param, message)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+                #{userName,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{uri,jdbcType=VARCHAR},
+                #{ip,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{requParam,jdbcType=LONGVARCHAR}, #{message,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.ExecLogWithBLOBs">
+        insert into hmt_exec_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="uri != null">
+                uri,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="requParam != null">
+                requ_param,
+            </if>
+            <if test="message != null">
+                message,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="uri != null">
+                #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="requParam != null">
+                #{requParam,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mybestcoding.hmt.model.ExecLogWithBLOBs">
+        update hmt_exec_log
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null">
+                method = #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="uri != null">
+                uri = #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="requParam != null">
+                requ_param = #{requParam,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="message != null">
+                message = #{message,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mybestcoding.hmt.model.ExecLogWithBLOBs">
+        update hmt_exec_log
+        set name        = #{name,jdbcType=VARCHAR},
+            user_id     = #{userId,jdbcType=VARCHAR},
+            user_name   = #{userName,jdbcType=VARCHAR},
+            method      = #{method,jdbcType=VARCHAR},
+            uri         = #{uri,jdbcType=VARCHAR},
+            ip          = #{ip,jdbcType=VARCHAR},
+            version     = #{version,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            requ_param  = #{requParam,jdbcType=LONGVARCHAR},
+            message     = #{message,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mybestcoding.hmt.model.ExecLog">
+        update hmt_exec_log
+        set name        = #{name,jdbcType=VARCHAR},
+            user_id     = #{userId,jdbcType=VARCHAR},
+            user_name   = #{userName,jdbcType=VARCHAR},
+            method      = #{method,jdbcType=VARCHAR},
+            uri         = #{uri,jdbcType=VARCHAR},
+            ip          = #{ip,jdbcType=VARCHAR},
+            version     = #{version,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

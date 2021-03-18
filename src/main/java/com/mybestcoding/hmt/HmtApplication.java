@@ -8,11 +8,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Slf4j
 @EnableTransactionManagement
 @EnableCaching
+@EnableAspectJAutoProxy
 @SpringBootApplication
 public class HmtApplication implements CommandLineRunner {
 
