@@ -2,6 +2,8 @@ package com.mybestcoding.hmt.mapper;
 
 import com.mybestcoding.hmt.model.TerminalDevice;
 
+import java.util.List;
+
 public interface TerminalDeviceMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -9,7 +11,11 @@ public interface TerminalDeviceMapper {
 
     int insertSelective(TerminalDevice record);
 
+    int insertTdToWareHouse(Integer did, Integer wid);
+
     TerminalDevice selectByPrimaryKey(Integer id);
+
+    List<TerminalDevice> selectByWarehouseId(Integer id);
 
     int updateByPrimaryKeySelective(TerminalDevice record);
 
