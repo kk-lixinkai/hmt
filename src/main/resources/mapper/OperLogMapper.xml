@@ -3,8 +3,11 @@
 <mapper namespace="com.mybestcoding.hmt.mapper.OperLogMapper">
     <resultMap id="BaseResultMap" type="com.mybestcoding.hmt.model.OperLog">
         <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="module" jdbcType="VARCHAR" property="module"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
         <result column="method" jdbcType="VARCHAR" property="method"/>
         <result column="uri" jdbcType="VARCHAR" property="uri"/>
         <result column="ip" jdbcType="VARCHAR" property="ip"/>
@@ -16,7 +19,7 @@
         <result column="resp_param" jdbcType="LONGVARCHAR" property="respParam"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, user_name, method, uri, ip, create_time, version
+        id, module, description, user_id, user_name, type, method, uri, ip, create_time, version
     </sql>
     <sql id="Blob_Column_List">
         requ_param, resp_param
@@ -43,25 +46,37 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.mybestcoding.hmt.model.OperLogWithBLOBs">
-        insert into hmt_oper_log (id, user_id, user_name,
+        insert into hmt_oper_log (id, module, description, user_id, user_name, type,
                                   method, uri, ip, create_time,
                                   version, requ_param, resp_param)
-        values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+        values (#{id,jdbcType=INTEGER}, #{module, jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+                #{userId,jdbcType=VARCHAR},
+                #{userName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
                 #{method,jdbcType=VARCHAR}, #{uri,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
                 #{createTime,jdbcType=TIMESTAMP},
                 #{version,jdbcType=VARCHAR}, #{requParam,jdbcType=LONGVARCHAR}, #{respParam,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.OperLogWithBLOBs">
+    <insert id="insertSelective" parameterType="com.mybestcoding.hmt.model.OperLogWithBLOBs" useGeneratedKeys="true"
+            keyProperty="id">
         insert into hmt_oper_log
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
+            </if>
+            <if test="module != null">
+                module,
+            </if>
+            <if test="description != null">
+                description,
             </if>
             <if test="userId != null">
                 user_id,
             </if>
             <if test="userName != null">
                 user_name,
+            </if>
+            <if test="type != null">
+                type,
             </if>
             <if test="method != null">
                 method,
@@ -89,11 +104,20 @@
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
+            <if test="module != null">
+                #{module,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
             <if test="userId != null">
                 #{userId,jdbcType=VARCHAR},
             </if>
             <if test="userName != null">
                 #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
             </if>
             <if test="method != null">
                 #{method,jdbcType=VARCHAR},
@@ -121,11 +145,20 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.mybestcoding.hmt.model.OperLogWithBLOBs">
         update hmt_oper_log
         <set>
+            <if test="module != null">
+                module = #{module,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
             <if test="userId != null">
                 user_id = #{userId,jdbcType=VARCHAR},
             </if>
             <if test="userName != null">
                 user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                method = #{type,jdbcType=VARCHAR},
             </if>
             <if test="method != null">
                 method = #{method,jdbcType=VARCHAR},
@@ -154,7 +187,10 @@
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mybestcoding.hmt.model.OperLogWithBLOBs">
         update hmt_oper_log
         set user_id     = #{userId,jdbcType=VARCHAR},
+            module      = #{module,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
             user_name   = #{userName,jdbcType=VARCHAR},
+            type        = #{type,jdbcType=VARCHAR},
             method      = #{method,jdbcType=VARCHAR},
             uri         = #{uri,jdbcType=VARCHAR},
             ip          = #{ip,jdbcType=VARCHAR},
@@ -167,7 +203,10 @@
     <update id="updateByPrimaryKey" parameterType="com.mybestcoding.hmt.model.OperLog">
         update hmt_oper_log
         set user_id     = #{userId,jdbcType=VARCHAR},
+            module      = #{module,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
             user_name   = #{userName,jdbcType=VARCHAR},
+            type        = #{type,jdbcType=VARCHAR},
             method      = #{method,jdbcType=VARCHAR},
             uri         = #{uri,jdbcType=VARCHAR},
             ip          = #{ip,jdbcType=VARCHAR},

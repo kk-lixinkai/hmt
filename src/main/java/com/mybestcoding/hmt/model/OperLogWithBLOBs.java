@@ -3,6 +3,7 @@ package com.mybestcoding.hmt.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 /**
@@ -10,6 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class OperLogWithBLOBs extends OperLog {
     private String requParam;
 

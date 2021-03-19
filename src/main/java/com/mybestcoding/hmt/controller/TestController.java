@@ -1,7 +1,9 @@
 package com.mybestcoding.hmt.controller;
 
+import com.mybestcoding.hmt.annotation.LogOperation;
 import com.mybestcoding.hmt.broker.MqttBroker;
 import com.mybestcoding.hmt.broker.MqttGateway;
+import com.mybestcoding.hmt.constant.LogOperationType;
 import com.mybestcoding.hmt.constant.ResponseBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +33,13 @@ public class TestController {
     @GetMapping(value = "/publishTopic")
     public ResponseBody publishTopic() {
         gateway.sendToMqtt("hello, SpringBoot");
+        return ResponseBody.success("");
+    }
+
+
+    @LogOperation(module = "测试", type = LogOperationType.ADDED, desc = "测试接口")
+    @GetMapping("/test")
+    public ResponseBody test() {
         return ResponseBody.success("");
     }
 }

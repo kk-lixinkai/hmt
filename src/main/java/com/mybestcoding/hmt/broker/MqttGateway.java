@@ -1,6 +1,7 @@
 package com.mybestcoding.hmt.broker;
 
 import org.springframework.integration.annotation.MessagingGateway;
+import org.springframework.stereotype.Component;
 
 /**
  * @author: lixinkai
@@ -10,6 +11,7 @@ import org.springframework.integration.annotation.MessagingGateway;
  * @Gitee: https://gitee.com/bestbug
  * @version: 1.0
  */
+@Component
 @MessagingGateway(defaultRequestChannel = "mqttInputChannel")
 public interface MqttGateway {
     void sendToMqtt(String message);
