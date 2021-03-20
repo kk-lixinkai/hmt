@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author: lixinkai
@@ -20,11 +24,14 @@ import org.springframework.cache.annotation.Cacheable;
  * @Gitee: https://gitee.com/bestbug
  * @version: 1.0
  */
+@Service
 public class NodeServiceImpl implements NodeService {
 
     @Autowired
     private NodeMapper nodeMapper;
 
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Cacheable(value = "node", key = "'node'+${id}")
     @Override
     public Node findOne(Integer id) {
@@ -35,6 +42,7 @@ public class NodeServiceImpl implements NodeService {
         return node;
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
     public List<Node> findAll() {
         List<Node> nodes = nodeMapper.selectAll();
@@ -45,6 +53,7 @@ public class NodeServiceImpl implements NodeService {
     }
 
 
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @CachePut(value = "node", key = "'node'+${node.id}")
     @Override
     public Node add(Node node) {
@@ -54,6 +63,7 @@ public class NodeServiceImpl implements NodeService {
     }
 
 
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @CacheEvict(value = "node", key = "'node' + ${id}")
     @Override
     public int remove(Integer id) {

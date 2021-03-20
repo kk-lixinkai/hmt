@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
     public List<User> getAll() {
         return userMapper.selectAllUsers();

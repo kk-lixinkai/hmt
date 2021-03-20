@@ -11,6 +11,9 @@ import com.mybestcoding.hmt.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -33,6 +36,7 @@ public class AccountServiceImpl implements AccountService {
     private RoleMapper roleMapper;
 
 
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
     public User doLogin(LoginDto loginDto) {
         User user = null;
@@ -57,6 +61,7 @@ public class AccountServiceImpl implements AccountService {
         return user;
     }
 
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
     @Override
     public User doRegistry(RegisterDto registerDto) {
         checkReRegister(registerDto.getUsername(), registerDto.getEmail());

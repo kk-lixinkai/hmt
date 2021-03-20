@@ -11,10 +11,14 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.Part;
 import javax.mail.internet.MimeMessage;
+import java.util.Arrays;
 
 /**
  * @author: lixinkai
@@ -60,6 +64,7 @@ public class MailServiceImpl implements MailService {
      * @param toEmail 接收到的邮件
      * @return 保存结果，true 成功；false：失败
      */
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
     public boolean saveEmail(ToEmail toEmail) {
         int result = 0;
@@ -67,7 +72,7 @@ public class MailServiceImpl implements MailService {
                 toEmail.getContent() != null) {
 
             Email email = new Email()
-                    .setTo(toEmail.getReceivers().toString())
+                    .setTo(Arrays.toString(toEmail.getReceivers()))
                     .setSubject(toEmail.getSubject())
                     .setContent(toEmail.getContent());
             result = emailMapper.insertSelective(email);
