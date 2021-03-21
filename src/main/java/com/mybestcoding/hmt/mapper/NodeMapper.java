@@ -7,6 +7,10 @@ import java.util.List;
 public interface NodeMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteByWid(Integer wid);
+
+    int deleteByDid(Integer did);
+
     int insert(Node record);
 
     int insertSelective(Node record);

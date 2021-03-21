@@ -65,6 +65,13 @@ logging:
     com.mybestcoding.hmt.mapper: debug
 
 
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+
 redistimeseries:
   host: 47.119.135.236
   port: 6379

@@ -3,7 +3,7 @@ package com.mybestcoding.hmt.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import com.mybestcoding.hmt.constant.NodeDTO;
+import com.mybestcoding.hmt.model.dto.NodeDTO;
 import com.mybestcoding.hmt.mapper.NodeMapper;
 import com.mybestcoding.hmt.model.Node;
 import com.mybestcoding.hmt.service.NodeService;
@@ -70,21 +70,5 @@ public class NodeServiceImpl implements NodeService {
         return nodeMapper.deleteByPrimaryKey(id);
     }
 
-    /**
-     * 创建一个新节点
-     *
-     * @param nodeDto
-     * @return
-     */
-    private Node createNewNode(NodeDTO nodeDto) {
-        Node newNode = new Node();
-        newNode.setType(nodeDto.getType());
-        newNode.setStatus(nodeDto.getStatus());
-        newNode.setWid(nodeDto.getWid());
-        newNode.setTid(nodeDto.getTid());
-        newNode.setCreatedTime(new Date());
-        newNode.setUpdatedTime(null);
-        newNode.setDeleteTime(null);
-        return newNode;
-    }
+
 }

@@ -1,4 +1,4 @@
-package com.mybestcoding.hmt.constant;
+package com.mybestcoding.hmt.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

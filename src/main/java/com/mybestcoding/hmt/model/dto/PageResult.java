@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class PageResult implements Converter<PageResult, PageInfo> {
+public class PageResult {
     /**
      * 总数据记录数
      */
@@ -37,12 +37,8 @@ public class PageResult implements Converter<PageResult, PageInfo> {
      */
     private int pageSize;
 
-    @Override
-    public PageResult convert(PageInfo obj) {
-        return new PageResult()
-                .setTotal(obj.getTotal())
-                .setPages(obj.getPages())
-                .setPageNo(obj.getPageNum())
-                .setPageSize(obj.getPageSize());
-    }
+    /**
+     * 分页数据
+     */
+    private Object data;
 }

@@ -28,6 +28,12 @@
         from hmt_terminaldevice
         where id = #{id,jdbcType=INTEGER}
     </delete>
+    <delete id="deleteTdWithWareHouse">
+        delete
+        from hmt_w_d
+        where wid = #{wid, jdbcType=INTEGER}
+          and did = #{did,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.mybestcoding.hmt.model.TerminalDevice" useGeneratedKeys="true"
             keyProperty="id">
         insert into hmt_terminaldevice (id, status, created_time,

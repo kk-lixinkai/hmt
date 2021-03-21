@@ -2,9 +2,14 @@ package com.mybestcoding.hmt.util;
 
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
+import com.github.pagehelper.PageInfo;
+import com.mybestcoding.hmt.model.Node;
+import com.mybestcoding.hmt.model.dto.NodeDTO;
+import com.mybestcoding.hmt.model.dto.PageResult;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -62,5 +67,40 @@ public class CommonUtil {
         long timestamp = sdf.parse(date, new ParsePosition(0)).getTime() / 1000;
         return timestamp;
 
+    }
+
+
+    /**
+     * 封装分页数据
+     *
+     * @param obj 分页数据
+     * @return 自定义分页数据
+     */
+    public static PageResult pageConvert(PageInfo obj) {
+        return new PageResult()
+                .setTotal(obj.getTotal())
+                .setPages(obj.getPages())
+                .setPageNo(obj.getPageNum())
+                .setPageSize(obj.getPageSize())
+                .setData(obj.getList());
+    }
+
+
+    /**
+     * 创建一个新节点
+     *
+     * @param nodeDto
+     * @return
+     */
+    public static Node createNewNode(NodeDTO nodeDto) {
+        Node newNode = new Node();
+        newNode.setType(nodeDto.getType());
+        newNode.setStatus(nodeDto.getStatus());
+        newNode.setWid(nodeDto.getWid());
+        newNode.setTid(nodeDto.getTid());
+        newNode.setCreatedTime(new Date());
+        newNode.setUpdatedTime(null);
+        newNode.setDeleteTime(null);
+        return newNode;
     }
 }

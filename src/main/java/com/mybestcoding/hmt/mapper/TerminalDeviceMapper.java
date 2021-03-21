@@ -7,6 +7,8 @@ import java.util.List;
 public interface TerminalDeviceMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteTdWithWareHouse(Integer wid, Integer did);
+
     int insert(TerminalDevice record);
 
     int insertSelective(TerminalDevice record);

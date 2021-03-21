@@ -1,6 +1,5 @@
 package com.mybestcoding.hmt.service;
 
-import com.mybestcoding.hmt.constant.NodeDTO;
 import com.mybestcoding.hmt.model.Node;
 
 import java.util.List;
@@ -26,6 +25,8 @@ public interface NodeService {
      * @return
      */
     List<Node> findAll();
+
+
 
     /**
      * 添加节点

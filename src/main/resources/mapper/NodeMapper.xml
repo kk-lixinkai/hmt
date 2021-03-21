@@ -30,6 +30,16 @@
         from hmt_node
         where id = #{id,jdbcType=INTEGER}
     </delete>
+    <delete id="deleteByWid">
+        delete
+        from hmt_node
+        where wid = #{wid,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByDid">
+        delete
+        from hmt_node
+        where tid = #{did,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.mybestcoding.hmt.model.Node" useGeneratedKeys="true" keyProperty="id">
         insert into hmt_node (id, type, status,
                               wid, tid, created_time,
