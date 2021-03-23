@@ -27,7 +27,6 @@ public interface NodeService {
     List<Node> findAll();
 
 
-
     /**
      * 添加节点
      *
@@ -35,6 +34,15 @@ public interface NodeService {
      * @return
      */
     Node add(Node node);
+
+
+    /**
+     * 修改节点信息
+     *
+     * @param node
+     * @return
+     */
+    int modify(Node node);
 
     /**
      * 删除节点

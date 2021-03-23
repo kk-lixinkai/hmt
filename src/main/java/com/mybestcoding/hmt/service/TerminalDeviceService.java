@@ -49,7 +49,7 @@ public interface TerminalDeviceService {
      * @param id
      * @return
      */
-    int removeTerminalDevice(Integer id, Integer did);
+    int removeTerminalDevice(Integer wid, Integer did);
 
     /**
      * 绑定

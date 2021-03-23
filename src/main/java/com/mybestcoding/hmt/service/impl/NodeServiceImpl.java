@@ -32,7 +32,7 @@ public class NodeServiceImpl implements NodeService {
 
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    @Cacheable(value = "node", key = "'node'+${id}")
+    @Cacheable(value = "node", key = "'node_'+${id}")
     @Override
     public Node findOne(Integer id) {
         Node node = nodeMapper.selectByPrimaryKey(id);
@@ -54,7 +54,7 @@ public class NodeServiceImpl implements NodeService {
 
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    @CachePut(value = "node", key = "'node'+${node.id}")
+    @CachePut(value = "node", key = "'node_'+${node.id}")
     @Override
     public Node add(Node node) {
 //        Node node = createNewNode(nodeDTO);
@@ -62,9 +62,20 @@ public class NodeServiceImpl implements NodeService {
         return node;
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+    @CachePut(value = "node", key = "'node_' + ${node.id}")
+    @Override
+    public int modify(Node node) {
+        int modifyResult = nodeMapper.updateByPrimaryKeySelective(node);
+        if (modifyResult <= 0) {
+            throw new RuntimeException("修改失败");
+        }
+        return modifyResult;
+    }
+
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    @CacheEvict(value = "node", key = "'node' + ${id}")
+    @CacheEvict(value = "node", key = "'node_' + ${id}")
     @Override
     public int remove(Integer id) {
         return nodeMapper.deleteByPrimaryKey(id);

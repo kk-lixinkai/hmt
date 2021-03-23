@@ -61,18 +61,18 @@ public class TerminalDeviceServiceImpl implements TerminalDeviceService {
         return bindResult;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     @Override
     public int removeTerminalDevice(Integer wid, Integer did) {
         // 解除绑定
         int unBindResult = terminalDeviceMapper.deleteTdWithWareHouse(wid, did);
         if (unBindResult <= 0) {
-            throw new RuntimeException("解绑失败");
+            throw new RuntimeException("删除失败，终端无法从所属仓库移除");
         }
         // 清空该终端下的节点
         int result = nodeMapper.deleteByDid(did);
         if (result <= 0) {
-            throw new RuntimeException("清空节点信息失败");
+            throw new RuntimeException("删除失败，清空终端下所有的节点信息失败");
         }
         // 删除终端信息
         return terminalDeviceMapper.deleteByPrimaryKey(did);

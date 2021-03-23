@@ -1,6 +1,5 @@
 package com.mybestcoding.hmt.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mybestcoding.hmt.annotation.LogOperation;
@@ -82,6 +81,23 @@ public class NodeController {
         return ResponseBody.success("success", result);
     }
 
+    @ApiOperation("修改节点")
+    @LogOperation(module = "节点控制", type = LogOperationType.UPDATE, desc = "修改节点信息")
+    @PutMapping(value = "/modify")
+    public ResponseBody modifyNode(@RequestBody Node node) {
+        int modifyResult = nodeService.modify(node);
+        return ResponseBody.success("修改成功", modifyResult);
+    }
+
+
+    @ApiOperation("删除节点")
+    @LogOperation(module = "节点控制", type = LogOperationType.DELETE, desc = "删除节点")
+    @DeleteMapping(value = "/{id}")
+    public ResponseBody removeNode(@PathVariable("id") Integer id) {
+        int removeResult = nodeService.remove(id);
+        return ResponseBody.success("节点移除成功", removeResult);
+    }
+
 
     /**
      * 检查仓库和终端是否正确
@@ -98,6 +114,7 @@ public class NodeController {
         }
         return true;
     }
+
 
     /**
      * 构建新节点
