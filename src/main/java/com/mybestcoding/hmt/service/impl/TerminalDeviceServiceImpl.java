@@ -23,14 +23,12 @@ import java.util.List;
 @Service
 public class TerminalDeviceServiceImpl implements TerminalDeviceService {
 
-    private final TerminalDeviceMapper terminalDeviceMapper;
+    @Autowired
+    private TerminalDeviceMapper terminalDeviceMapper;
 
-    private final NodeMapper nodeMapper;
+    @Autowired
+    private NodeMapper nodeMapper;
 
-    public TerminalDeviceServiceImpl(TerminalDeviceMapper terminalDeviceMapper, NodeMapper nodeMapper) {
-        this.terminalDeviceMapper = terminalDeviceMapper;
-        this.nodeMapper = nodeMapper;
-    }
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
@@ -65,7 +63,7 @@ public class TerminalDeviceServiceImpl implements TerminalDeviceService {
     @Override
     public int removeTerminalDevice(Integer wid, Integer did) {
         // 解除绑定
-        int unBindResult = terminalDeviceMapper.deleteTdWithWareHouse(wid, did);
+        int unBindResult = terminalDeviceMapper.deleteTdWithWareHouse(wid);
         if (unBindResult <= 0) {
             throw new RuntimeException("删除失败，终端无法从所属仓库移除");
         }
@@ -87,6 +85,6 @@ public class TerminalDeviceServiceImpl implements TerminalDeviceService {
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
     public int unBind(Integer wid, Integer did) {
-        return terminalDeviceMapper.deleteTdWithWareHouse(wid, did);
+        return terminalDeviceMapper.deleteTdWithWareHouse(wid);
     }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,8 @@ import java.util.Date;
 @Setter
 @Getter
 @ToString
-public class OperLog {
+public class OperLog implements Serializable {
+    private static final long serialVersionUID = -4869578326424826523L;
     private Integer id;
 
     private String module;

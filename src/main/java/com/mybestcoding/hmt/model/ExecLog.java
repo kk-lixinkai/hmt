@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,8 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class ExecLog {
+public class ExecLog implements Serializable {
+    private static final long serialVersionUID = -7743577806282705790L;
     private Integer id;
 
     private String name;

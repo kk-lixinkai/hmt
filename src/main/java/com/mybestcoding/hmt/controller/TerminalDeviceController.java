@@ -73,6 +73,6 @@ public class TerminalDeviceController {
     @DeleteMapping(value = "/delete")
     public ResponseBody removeTerminal(@RequestParam("wid") Integer wid, @RequestParam("did") Integer did) {
         int result = terminalDeviceService.removeTerminalDevice(wid, did);
-        return ResponseBody.success("删除成功", did);
+        return ResponseBody.success("删除成功", result);
     }
 }

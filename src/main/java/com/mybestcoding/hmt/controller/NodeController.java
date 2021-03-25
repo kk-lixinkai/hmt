@@ -58,7 +58,7 @@ public class NodeController {
 
     @ApiOperation("获取指定节点")
     @LogOperation(module = "节点控制", type = LogOperationType.SELECT, desc = "查询当前节点")
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/get/{id}")
     public ResponseBody getNodeInfo(@PathVariable("id") Integer id) {
         Node result = nodeService.findOne(id);
         if (result == null || result.getId() == 0) {
@@ -92,7 +92,7 @@ public class NodeController {
 
     @ApiOperation("删除节点")
     @LogOperation(module = "节点控制", type = LogOperationType.DELETE, desc = "删除节点")
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseBody removeNode(@PathVariable("id") Integer id) {
         int removeResult = nodeService.remove(id);
         return ResponseBody.success("节点移除成功", removeResult);

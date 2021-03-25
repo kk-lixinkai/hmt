@@ -12,6 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public class ExecLogWithBLOBs extends ExecLog {
+    private static final long serialVersionUID = 6828167334938779891L;
     private String requParam;
 
     private String message;
