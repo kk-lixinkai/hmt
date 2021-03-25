@@ -48,5 +48,5 @@ public interface WarehouseService {
      * @param did
      * @return
      */
-    int removeWareHouse(Integer wid, Integer did);
+    int removeWareHouse(Integer id);
 }

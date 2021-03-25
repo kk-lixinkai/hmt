@@ -27,7 +27,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    User modify(User user);
+    int modify(User user);
 
     /**
      * 添加用户
@@ -35,7 +35,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    User add(User user);
+    int add(User user);
 
     /**
      * 删除用户
@@ -43,5 +43,5 @@ public interface UserService {
      * @param userId
      * @return
      */
-    void delete(int userId);
+    int delete(int userId);
 }

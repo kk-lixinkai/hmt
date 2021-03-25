@@ -57,9 +57,9 @@ public class WareHouseServiceImpl implements WarehouseService {
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
-    public int removeWareHouse(Integer wid, Integer did) {
+    public int removeWareHouse(Integer wid) {
         // 解除终端与仓库的绑定
-        int unBindResult = terminalDeviceMapper.deleteTdWithWareHouse(wid, did);
+        int unBindResult = terminalDeviceMapper.deleteTdWithWareHouse(wid);
         if (unBindResult <= 0) {
             throw new RuntimeException("解除终端与仓库的绑定失败");
         }

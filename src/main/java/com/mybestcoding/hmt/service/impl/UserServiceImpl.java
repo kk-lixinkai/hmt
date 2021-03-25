@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @CachePut(value = "user", key = "'user_' + #user.id")
     @Override
-    public User modify(User user) {
+    public int modify(User user) {
 //        // 更新用户信息修改时间
 //        user.setUpdatedTime(new Date()).setDeleteTime(null);
         int updateResult = userMapper.updateByPrimaryKeySelective(user);
@@ -57,24 +57,28 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("用户信息修改失败");
         }
         // 返回更新后的用户信息
-        return user;
+        return updateResult;
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @CachePut(value = "user", key = "'user_' + #user.id")
     @Override
-    public User add(User user) {
-        userMapper.insertSelective(user);
-        return user;
+    public int add(User user) {
+        int result = userMapper.insertSelective(user);
+        if (result <= 0) {
+            throw new RuntimeException("添加用户信息失败");
+        }
+        return result;
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @CacheEvict(value = "user", key = "'user_'+#userId")
     @Override
-    public void delete(int userId) {
+    public int delete(int userId) {
         int delResult = userMapper.deleteByPrimaryKey(userId);
         if (delResult <= 0) {
             throw new RuntimeException("用户删除失败");
         }
+        return delResult;
     }
 }
