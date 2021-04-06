@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Api(tags = "节点控制")
 @RestController
-@RequestMapping(value = "/node")
+@RequestMapping(value = "/api/node")
 public class NodeController {
 
     @Autowired

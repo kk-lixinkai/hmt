@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Api(tags = "仓库操作接口")
 @RestController
-@RequestMapping(value = "/warehouse")
+@RequestMapping(value = "/api/warehouse")
 public class WareHouseController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class WareHouseController {
 
     @ApiOperation(value = "查询仓库信息")
     @LogOperation(module = "仓控控制", type = LogOperationType.SELECT, desc = "查询指定仓库信息")
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/get/{id}")
     public ResponseBody getOne(@PathVariable("id") Integer id) {
         WareHouse result = warehouseService.getOne(id);
         return ResponseBody.success("查询成功", result);

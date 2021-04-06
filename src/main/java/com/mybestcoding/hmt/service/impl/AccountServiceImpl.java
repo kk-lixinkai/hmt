@@ -10,11 +10,13 @@ import com.mybestcoding.hmt.service.AccountService;
 import com.mybestcoding.hmt.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
@@ -35,6 +37,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private RoleMapper roleMapper;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Override
@@ -53,7 +58,7 @@ public class AccountServiceImpl implements AccountService {
             throw new RuntimeException("该用户不存在");
         }
         // 判断密码是否正确
-        String password = CommonUtil.encryption(loginDto.getPassword(), user.getSalt());
+        String password = bCryptPasswordEncoder.encode(loginDto.getPassword());
         log.info("加密后的密码{}， 数据库内的密码{}", password, user.getPassword());
         if (!password.equals(user.getPassword())) {
             throw new RuntimeException("用户密码密码错误");
@@ -68,7 +73,7 @@ public class AccountServiceImpl implements AccountService {
         // 获取加密盐
         String salt = CommonUtil.getSalt();
         // 生成密码密文
-        String password = CommonUtil.encryption(registerDto.getPassword(), salt);
+        String password = bCryptPasswordEncoder.encode(registerDto.getPassword());
         // 构建新用户
         User user = new User()
                 .setNickname(registerDto.getUsername())
@@ -81,6 +86,7 @@ public class AccountServiceImpl implements AccountService {
                 .setDeleteTime(null);
         // 添加权限
         userMapper.insertSelective(user);
+        log.info("返回的用户数据:{}", user);
         // 添加权限
         String roleName = registerDto.getRole();
         Role role = roleMapper.selectByRoleName(roleName);
@@ -104,13 +110,13 @@ public class AccountServiceImpl implements AccountService {
     private void checkReRegister(String username, String email) {
         if (null != username) {
             User user = userMapper.selectByUserName(username);
-            if (user.getId() > 0) {
+            if (user != null) {
                 throw new RuntimeException("该用户名已经被使用");
             }
         }
         if (null != email) {
             User user = userMapper.selectByEmail(email);
-            if (user.getId() > 0) {
+            if (user != null) {
                 throw new RuntimeException("该邮箱已经被使用");
             }
         }

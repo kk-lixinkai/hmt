@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,20 +23,28 @@ import org.springframework.web.bind.annotation.RestController;
  * @version: 1.0
  */
 @Api(tags = "账号操作")
-@RestController
+@Controller
 public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @ApiOperation("登录")
+//    @ApiOperation("登录")
+//    @PostMapping(value = "/login")
+//    public ResponseBody doLogin(@RequestBody LoginDto loginDto) {
+//        User user = accountService.doLogin(loginDto);
+//        return ResponseBody.success("用户登录成功", user);
+//    }
+
+    @ApiOperation("登录,登录使用/auth/login,不要使用此接口")
     @PostMapping(value = "/login")
-    public ResponseBody doLogin(@RequestBody LoginDto loginDto) {
-        User user = accountService.doLogin(loginDto);
-        return ResponseBody.success("用户登录成功", user);
+    public String doLogin(@RequestBody LoginDto loginDto) {
+//        User user = accountService.doLogin(loginDto);
+        return "forward:/auth/login";
     }
 
     @ApiOperation("注册")
     @PostMapping(value = "/register")
+    @org.springframework.web.bind.annotation.ResponseBody
     public ResponseBody doRegister(@RequestBody RegisterDto registerDto) {
         User user = accountService.doRegistry(registerDto);
         return ResponseBody.success("新用户注册成功", user);

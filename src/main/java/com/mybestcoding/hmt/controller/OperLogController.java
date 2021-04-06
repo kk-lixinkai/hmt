@@ -23,14 +23,14 @@ import java.util.List;
  */
 @Api(tags = "操作日志查询接口")
 @RestController
-@RequestMapping(value = "/log/operation")
+@RequestMapping(value = "/api/log/operation")
 public class OperLogController {
     @Autowired
     private OperLogService operLogService;
 
 
     @ApiOperation("查询所有操作日志")
-    @GetMapping(value = "/")
+    @GetMapping(value = "/all")
     public ResponseBody getAll(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<OperLogWithBLOBs> allInfo = operLogService.findAll();

@@ -22,6 +22,6 @@ public class LoginDto {
     @ApiModelProperty("密码")
     private String password;
     @ApiModelProperty("记住我")
-    private boolean remember;
+    private boolean rememberMe;
 
 }

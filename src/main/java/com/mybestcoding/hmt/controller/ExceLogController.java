@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Api(tags = "异常日志查询")
 @RestController
-@RequestMapping(value = "/log/exception")
+@RequestMapping(value = "/api/log/exception")
 public class ExceLogController {
 
     @Autowired

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @version: 1.0
  */
 @RestController
-@RequestMapping("/")
 @Api("测试")
 public class TestController {
 

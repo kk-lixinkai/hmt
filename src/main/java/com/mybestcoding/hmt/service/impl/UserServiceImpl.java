@@ -3,10 +3,12 @@ package com.mybestcoding.hmt.service.impl;
 import com.mybestcoding.hmt.mapper.UserMapper;
 import com.mybestcoding.hmt.model.User;
 import com.mybestcoding.hmt.service.UserService;
+import com.mybestcoding.hmt.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     @Cacheable(value = "user", key = "'user_' + #userId")
@@ -36,6 +41,15 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.selectByPrimaryKey(userId);
         if (user == null) {
             throw new RuntimeException("用户不存在");
+        }
+        return user;
+    }
+
+    @Override
+    public User getByUserName(String username) {
+        User user = userMapper.selectByUserName(username);
+        if (user == null && user.getId() <= 0) {
+            throw new RuntimeException("该用户不存在");
         }
         return user;
     }
@@ -64,6 +78,7 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "user", key = "'user_' + #user.id")
     @Override
     public int add(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())).setSalt(CommonUtil.getSalt()).setUpdatedTime(null).setDeleteTime(null);
         int result = userMapper.insertSelective(user);
         if (result <= 0) {
             throw new RuntimeException("添加用户信息失败");

@@ -32,11 +32,23 @@ public class ResponseBody implements Serializable {
      */
     private Object obj;
 
-    public ResponseBody(Integer code, String message, Object obj) {
+    /**
+     * 令牌
+     */
+    private String token;
+
+
+    public ResponseBody(Integer code, String message, Object obj, String token) {
         this.code = code;
         this.message = message;
         this.obj = obj;
+        this.token = token;
     }
+
+    public ResponseBody(Integer code, String message, Object obj) {
+        this(code, message, obj, null);
+    }
+
 
     public ResponseBody(Integer code, String message) {
         this(code, message, null);
@@ -44,6 +56,9 @@ public class ResponseBody implements Serializable {
 
     public ResponseBody(Integer code) {
         this(code, "");
+    }
+
+    public ResponseBody() {
     }
 
     public static ResponseBody success(String message, Object obj) {

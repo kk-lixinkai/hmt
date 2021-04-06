@@ -14,6 +14,15 @@ public interface UserService {
      */
     User getOne(int userId);
 
+
+    /**
+     * 根据用户名查找用户
+     *
+     * @param username
+     * @return
+     */
+    User getByUserName(String username);
+
     /**
      * 获取全部用户信息
      *

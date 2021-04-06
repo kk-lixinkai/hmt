@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.mybestcoding.hmt.annotation.LogOperation;
 import com.mybestcoding.hmt.model.ExecLogWithBLOBs;
 import com.mybestcoding.hmt.model.OperLogWithBLOBs;
+import com.mybestcoding.hmt.model.User;
 import com.mybestcoding.hmt.service.ExecLogService;
 import com.mybestcoding.hmt.service.OperLogService;
+import com.mybestcoding.hmt.service.UserService;
+import com.mybestcoding.hmt.util.CurrentUser;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -44,6 +47,13 @@ public class LogAspect {
 
     @Autowired
     private ExecLogService execLogService;
+
+
+    @Autowired
+    private CurrentUser currentUser;
+
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -113,7 +123,10 @@ public class LogAspect {
             operLogWithBLOBs.setRespParam(JSON.toJSONString(keys));
             // 请求用户ID
             //TODO:
+            User user = userService.getByUserName(currentUser.getCurrentUser().getUsername());
+            operLogWithBLOBs.setUserId(String.valueOf(user.getId()));
             //请求用户名
+            operLogWithBLOBs.setUserName(currentUser.getCurrentUser().getUsername());
             //TODO:
             //请求IP
             operLogWithBLOBs.setIp(getRemoteHost(request));
@@ -129,8 +142,6 @@ public class LogAspect {
             e.printStackTrace();
         }
     }
-
-
 
 
     /**
@@ -171,8 +182,11 @@ public class LogAspect {
             execLogWithBLOBs.setMethod(stackTrackToString(e.getClass().getName(), e.getMessage(), e.getStackTrace()));
             // 操作员ID
             //TODO:
+            User user = userService.getByUserName(currentUser.getCurrentUser().getUsername());
+            execLogWithBLOBs.setUserId(String.valueOf(user.getId()));
             //操作员名称
             //TODO:
+            execLogWithBLOBs.setUserName(currentUser.getCurrentUser().getUsername());
             //操作URI
             execLogWithBLOBs.setUri(request.getRequestURI());
             // 操作员IP
@@ -181,6 +195,8 @@ public class LogAspect {
             execLogWithBLOBs.setVersion(version);
             // 异常发生时间
             execLogWithBLOBs.setCreateTime(new Date());
+            // 保存到数据库中
+            execLogService.addLog(execLogWithBLOBs);
             log.info("异常日志:{}", execLogWithBLOBs.toString());
         } catch (Exception e2) {
             e2.printStackTrace();

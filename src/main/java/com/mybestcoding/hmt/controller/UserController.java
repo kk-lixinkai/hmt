@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Api(tags = "用户操作接口")
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/user")
 public class UserController {
 
     @Autowired
@@ -45,7 +45,7 @@ public class UserController {
 
     @ApiOperation("查询指定用户信息")
     @LogOperation(module = "用户信息", type = LogOperationType.SELECT, desc = "查询指定用户信息")
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/get/{id}")
     public ResponseBody getOne(@PathVariable("id") Integer id) {
         User user = userService.getOne(id);
         return ResponseBody.success("查询成功", user);
@@ -60,7 +60,7 @@ public class UserController {
     }
 
 
-    @ApiOperation("添加用户信息")
+    @ApiOperation("添加用户信息，暂不可用")
     @LogOperation(module = "用户信息", type = LogOperationType.ADDED, desc = "添加用户信息")
     @PostMapping(value = "/add")
     public ResponseBody add(@RequestBody User user) {

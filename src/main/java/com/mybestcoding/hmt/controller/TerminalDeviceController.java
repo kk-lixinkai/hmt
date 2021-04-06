@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Api(tags = "终端控制接口")
 @RestController
-@RequestMapping(value = "/terminal")
+@RequestMapping(value = "/api/terminal")
 public class TerminalDeviceController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class TerminalDeviceController {
 
     @ApiOperation("查询终端设备信息")
     @LogOperation(module = "终端控制", type = LogOperationType.SELECT, desc = "查询终端设备信息")
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/get/{id}")
     public ResponseBody getOne(@PathVariable("id") Integer id) {
         TerminalDevice terminalDevice = terminalDeviceService.getOne(id);
         return ResponseBody.success("查询成功", terminalDevice);
